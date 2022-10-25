@@ -25,8 +25,8 @@ class PipelineService
 
             return $response["response"];
         } catch (Exception $e) {
-            $result['responseCode'] = 0;
-            $result['message'] = $e;
+            $result['code'] = 500;
+            $result['message'] = "Erreur de création d'un pipeline Serveur innaccessible";
             return $result;
         }
     }

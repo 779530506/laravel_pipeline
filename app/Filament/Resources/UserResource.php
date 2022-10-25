@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers\PipelinesRelationManager;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -21,6 +22,9 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+
+    protected static ?string $recordTitleAttribute = 'name';
+
 
     public static $icon = 'heroicon-o-user';
 
@@ -83,7 +87,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PipelinesRelationManager::class
         ];
     }
 

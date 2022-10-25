@@ -5,6 +5,7 @@ namespace App\Filament\Resources\PipelineResource\Pages;
 use App\Filament\Resources\PipelineResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\PipelineResource\Widgets\StatsOverview;
 
 class ListPipelines extends ListRecords
 {
@@ -14,6 +15,12 @@ class ListPipelines extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StatsOverview::class
         ];
     }
 }

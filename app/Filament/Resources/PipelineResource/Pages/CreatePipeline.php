@@ -13,7 +13,8 @@ class CreatePipeline extends CreateRecord
 {
     protected static string $resource = PipelineResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array{
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
         $response = PipelineService::createPipeline();
 
         // if ($response["code"]==201){
@@ -23,38 +24,41 @@ class CreatePipeline extends CreateRecord
         //     'name_dep' => $data['name_dep'],
         // ]);
 
-    //     return $data ;
-    // }
-    if ($response["code"]!=201){
+        //     return $data ;
+        // }
+        if ($response["code"] != 201) {
 
-        Notification::make()
-            ->title('Oups!')
-            ->danger()
-            ->body($response["message"])
-            ->persistent()
-            ->actions([
-                Action::make('OK')
-                    ->url(route('filament.pages.dashboard'))
-                    ->button()
-            ])
-            ->send();
-            return $data ;
-
-    }else{
-        Notification::make()
-        ->title('Success!')
-        ->danger()
-        ->body($response["message"])
-        ->persistent()
-        ->actions([
-            Action::make('OK')
-                ->url(route('filament.pages.dashboard'))
-                ->button()
-        ])
-        ->send();
-        return $data ;
+            Notification::make()
+                ->title('Oups!')
+                ->danger()
+                ->body($response["message"])
+                ->persistent()
+                ->actions([
+                    Action::make('OK')
+                        ->url(route('filament.pages.dashboard'))
+                        ->button()
+                ])
+                ->send();
+            return $data;
+        } else {
+            Notification::make()
+                ->title('Success!')
+                ->danger()
+                ->body($response["message"])
+                ->persistent()
+                ->actions([
+                    Action::make('OK')
+                        ->url(route('filament.pages.dashboard'))
+                        ->button()
+                ])
+                ->send();
+            return $data;
+        }
+        return $data;
     }
-    return $data ;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }
