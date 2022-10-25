@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PipelineResource\Pages;
 use App\Filament\Resources\PipelineResource\RelationManagers;
 use App\Filament\Resources\PipelineResource\Widgets\StatsOverview;
+use App\Models\Departement;
+use App\Models\Hopital;
 use App\Models\Pipeline;
 use App\Models\User;
 use Filament\Forms;
@@ -17,6 +19,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -33,6 +36,8 @@ class PipelineResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name_pipeline';
 
+    protected static ?string $navigationGroup = 'System management';
+
 
     public static function form(Form $form): Form
     {
@@ -40,22 +45,26 @@ class PipelineResource extends Resource
         ->schema([
             Card::make()
                 ->schema([
-                    TextInput::make('name_hospital')
-                        ->label('Nom de l\'hopital')
-                        ->maxLength(150)
-                        ->translateLabel(),
-                    TextInput::make('name_dep')
-                        ->required()
-                        ->label('Nom Departement')
-                        ->rules(['string'])
-                        ->maxLength(150)
-                        ->translateLabel(),
                     TextInput::make('name_pipeline')
                         ->required()
                         ->label('Nom de pipeline')
                         ->translateLabel(),
                     Select::make('user_id')
                         ->relationship('user', 'name'),
+                    Select::make('hopital_id')
+                        ->label('Hopital')
+                        ->options(Hopital::all()->pluck('name','id')->toArray())
+                        ->reactive()
+                        ->afterStateUpdated(fn (callable $set) => $set('departement_id',null)),
+                    Select::make('departement_id')
+                        ->label('Departement')
+                        ->options(function (callable $get){
+                            $hopital = Hopital::find($get('hopital_id'));
+                            if(!$hopital){
+                                return Departement::all()-> pluck('name','id');
+                            }
+                            return $hopital->departements->pluck('name','id');
+                        }),
                     Toggle::make('is_running'),
                  ])
                 ]);
@@ -67,23 +76,19 @@ class PipelineResource extends Resource
     {
         return $table
         ->columns([
-            TextColumn::make('name_hospital')
-                ->sortable()
-                ->searchable()
-                ->label('Nom Hopital ')
-                ->translateLabel(),
-            TextColumn::make('name_dep')
-                ->searchable()
-                ->label('Nom Département ')
-                ->translateLabel(),
             TextColumn::make('name_pipeline')
-                ->searchable()
-                ->label('Nom Pipeline ')
-                ->translateLabel(),
+            ->searchable()
+            ->label('Nom Pipeline ')
+            ->translateLabel(),
+            BadgeColumn::make('departement.name')
+            ->color('tertiary')
+            ->label('Departement'),
+
+            BadgeColumn::make('hopital.name')
+            ->color('tertiary')
+            ->label('Hopital'),
             IconColumn::make('is_running')
-                ->boolean()
-                ->trueIcon('heroicon-o-badge-check')
-                ->falseIcon('heroicon-o-x-circle')
+                ->boolean(),
 
            ])
             ->filters([

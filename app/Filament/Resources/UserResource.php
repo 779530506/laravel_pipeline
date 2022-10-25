@@ -9,19 +9,25 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\TextInput;
+use Filament\Pages\Page;
 use Filament\Resources\Form;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Livewire;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $navigationGroup = 'User management';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -41,11 +47,22 @@ class UserResource extends Resource
                         ->maxLength(150)
                         ->translateLabel(),
                     TextInput::make('password')
-                        ->required()
+                        ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord  )
+                        ->password()
                         ->label('Password')
                         ->rules(['string'])
-                        ->maxLength(150)
+                        ->minLength(8)
+                        ->dehydrated(fn ($state)=> filled($state))
+                        ->dehydrateStateUsing(fn ($state)=> Hash::make($state))
                         ->translateLabel(),
+                    // TextInput::make('password_confirmation')
+                    //     ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord)
+                    //     ->password()
+                    //     ->rules(['string'])
+                    //     ->label('Password Confirmation')
+                    //     ->maxLength(150)
+                    //     ->translateLabel()
+                    //     ->dehydrated(false),
                     TextInput::make('email')
                         ->required()
                         ->email()

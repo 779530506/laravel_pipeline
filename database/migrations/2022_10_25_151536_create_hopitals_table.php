@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pipelines', function (Blueprint $table) {
+        Schema::create('hopitals', function (Blueprint $table) {
             $table->id();
-            $table->text('name_pipeline');
-            $table->boolean('is_running');
-            $table->foreignId("departement_id");
-            $table->foreignId("hopital_id");
-            $table->foreignId('user_id')->nullable();
+            $table->string("name");
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pipelines');
+        Schema::dropIfExists('hopitals');
     }
 };

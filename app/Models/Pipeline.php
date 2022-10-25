@@ -11,14 +11,24 @@ class Pipeline extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name_hospital',
-        'name_dep',
         'name_pipeline',
         'is_running',
+        'departement_id',
+        'hopital_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function departement()
+    {
+        return $this->belongsTo(Departement::class);
+    }
+
+    public function hopital()
+    {
+        return $this->belongsTo(Hopital::class);
     }
 }
