@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DepartementResource\Pages;
 use App\Filament\Resources\DepartementResource\RelationManagers;
 use App\Models\Departement;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -34,6 +35,20 @@ class DepartementResource extends Resource
                 ->schema([
                     TextInput::make('name')
                         ->label('Nom departement')
+                        ->rules([
+                            function (Closure $get) {
+                                return function (string $attribute, $value, Closure  $fail) use ($get) {
+                                    $hopital_id = (int) $get('hopital_id');
+                                    $departements = Departement::where('hopital_id',$hopital_id)->pluck('name');
+                                    foreach($departements as $departement){
+                                        if ($departement == $value) {
+                                            $fail("Ce département existe dans cet hopital ");
+                                        }
+                                    }
+
+                                };
+                            },
+                        ])
                         ->maxLength(150)
                         ->translateLabel(),
                     Select::make('hopital_id')

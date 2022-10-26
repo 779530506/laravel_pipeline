@@ -33,6 +33,7 @@ class HopitalResource extends Resource
                 ->schema([
                     TextInput::make('name')
                         ->label('Nom Hopital')
+                        ->unique()
                         ->maxLength(150)
                  ])
                 ]);

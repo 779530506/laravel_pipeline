@@ -9,12 +9,17 @@ use App\Models\Departement;
 use App\Models\Hopital;
 use App\Models\Pipeline;
 use App\Models\User;
+use App\Services\PipelineService;
+use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Modal\Actions\Action;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
+use Filament\Pages\Actions\DeleteAction;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -48,6 +53,39 @@ class PipelineResource extends Resource
                     TextInput::make('name_pipeline')
                         ->required()
                         ->label('Nom de pipeline')
+                        ->rules([
+                            function (Closure $get) {
+                                return function (string $attribute, $value, Closure  $fail) use ($get) {
+                                    $departement_id = (int) $get('departement_id');
+                                    $hopital_id = (int) $get('hopital_id');
+                                    $pipelines = Pipeline::where('departement_id',$departement_id)->pluck('name_pipeline');
+                                    foreach($pipelines as $pipeline){
+                                        if ($pipeline == $value) {
+                                            $fail("Ce pipelines existe dans ce département ");
+                                        }
+                                    }
+
+                                    $response = PipelineService::createPipeline($hopital_id,$departement_id,$value);
+                                    //dd($response);
+                                    if ($response["code"] != 201) {
+                                            $fail("Erreur de création pipelines, verifier le serveur  ");
+                                            Notification::make()
+                                                ->title('Erreur!')
+                                                ->danger()
+                                                ->body('Impossible de créer ce pipeline, vérifier le serveur et les données saisies')
+                                                ->persistent()
+                                                ->send();
+                                    }else{
+                                        Notification::make()
+                                        ->title('Success!')
+                                        ->success()
+                                        ->body($response["message"])
+                                        ->persistent()
+                                        ->send();
+                                    }
+                                };
+                            },
+                        ])
                         ->translateLabel(),
                     Select::make('user_id')
                         ->relationship('user', 'name'),
@@ -66,6 +104,7 @@ class PipelineResource extends Resource
                             return $hopital->departements->pluck('name','id');
                         }),
                     Toggle::make('is_running'),
+
                  ])
                 ]);
 
@@ -90,6 +129,8 @@ class PipelineResource extends Resource
             IconColumn::make('is_running')
                 ->boolean(),
 
+
+
            ])
             ->filters([
                 Filter::make('is_running')
@@ -100,7 +141,9 @@ class PipelineResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -120,6 +163,7 @@ class PipelineResource extends Resource
             'index' => Pages\ListPipelines::route('/'),
             'create' => Pages\CreatePipeline::route('/create'),
             'edit' => Pages\EditPipeline::route('/{record}/edit'),
+            'view' => Pages\ViewPipeline::route('/{record}'),
         ];
     }
 
@@ -129,4 +173,6 @@ class PipelineResource extends Resource
             StatsOverview::class,
         ];
     }
+
+
 }
