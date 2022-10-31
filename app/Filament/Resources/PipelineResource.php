@@ -2,36 +2,38 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PipelineResource\Pages;
-use App\Filament\Resources\PipelineResource\RelationManagers;
-use App\Filament\Resources\PipelineResource\Widgets\StatsOverview;
-use App\Models\Departement;
-use App\Models\Hopital;
-use App\Models\Pipeline;
-use App\Models\User;
-use App\Services\PipelineService;
 use Closure;
 use Filament\Forms;
-use Filament\Forms\Components\Actions\Modal\Actions\Action;
-use Filament\Forms\Components\BelongsToSelect;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Notifications\Notification;
-use Filament\Pages\Actions\DeleteAction;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use App\Models\User;
 use Filament\Tables;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\BooleanColumn;
+use App\Models\Hopital;
+use App\Models\Pipeline;
+use App\Models\Departement;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use App\Services\PipelineService;
+use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Pages\Actions\DeleteAction;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Forms\Components\BelongsToSelect;
+use App\Filament\Resources\PipelineResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Actions\Modal\Actions\Action;
+use App\Filament\Resources\PipelineResource\RelationManagers;
+use Filament\Tables\Actions\DeleteAction as TableDeleteAction;
+use Filament\Notifications\Actions\Action as NotificationAction;
+use App\Filament\Resources\PipelineResource\Widgets\StatsOverview;
 
 class PipelineResource extends Resource
 {
@@ -49,6 +51,7 @@ class PipelineResource extends Resource
         return $form
         ->schema([
             Card::make()
+                ->columns(2)
                 ->schema([
                     TextInput::make('name_pipeline')
                         ->required()
@@ -90,12 +93,14 @@ class PipelineResource extends Resource
                     Select::make('user_id')
                         ->relationship('user', 'name'),
                     Select::make('hopital_id')
+                        ->required()
                         ->label('Hopital')
                         ->options(Hopital::all()->pluck('name','id')->toArray())
                         ->reactive()
                         ->afterStateUpdated(fn (callable $set) => $set('departement_id',null)),
                     Select::make('departement_id')
                         ->label('Departement')
+                        ->required()
                         ->options(function (callable $get){
                             $hopital = Hopital::find($get('hopital_id'));
                             if(!$hopital){
@@ -142,7 +147,26 @@ class PipelineResource extends Resource
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                TableDeleteAction::make()
+                ->before(function (TableDeleteAction $action,Pipeline $record) {
+                    $response = PipelineService::deletePipeline($record);
+
+                   if ( $response['code']!=204) {
+                        Notification::make()
+                            ->warning()
+                            ->title('Error de suppression pipeline')
+                            ->body('Verier si ce pipeline existe')
+                            ->persistent()
+                            // ->actions([
+                            //     NotificationAction::make('subscribe')
+                            //         ->button()
+                            //         ->url(route('filament.pages.dashboard'), shouldOpenInNewTab: true),
+                            // ])
+                            ->send();
+
+                         $action->halt();
+                    }
+                }),
                 Tables\Actions\ViewAction::make()
             ])
             ->bulkActions([
