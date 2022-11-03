@@ -2,24 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Filament\Resources\UserResource\RelationManagers\PipelinesRelationManager;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\TextInput;
+use App\Models\User;
+use Filament\Tables;
+use Livewire\Livewire;
 use Filament\Pages\Page;
 use Filament\Resources\Form;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Resource;
 use Filament\Resources\Table;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Livewire;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Resources\UserResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserResource\RelationManagers\PipelinesRelationManager;
+use Filament\Forms\Components\CheckboxList;
 
 class UserResource extends Resource
 {
@@ -31,6 +33,7 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    //protected static bool $shouldRegisterNavigation = false;
 
     public static $icon = 'heroicon-o-user';
 
@@ -42,8 +45,7 @@ class UserResource extends Resource
             Card::make()
                 ->schema([
                     TextInput::make('name')
-                        ->label('Prenom')
-                        ->rule('alpha_dash')
+                        ->label('Username')
                         ->maxLength(150)
                         ->translateLabel(),
                     TextInput::make('password')
@@ -70,7 +72,11 @@ class UserResource extends Resource
                         ->unique(table: User::class, column: 'email', ignoreRecord: true)
                         ->label('Email')
                         ->unique(ignoreRecord: true)
-                        ->translateLabel()
+                        ->translateLabel(),
+                    CheckboxList::make('roles')
+                    ->relationship('roles','name')
+                    ->columns(3)
+
                  ])
                 ]);
     }
@@ -87,6 +93,7 @@ class UserResource extends Resource
                 TextColumn::make('email')
                     ->searchable()
                     ->translateLabel(),
+                TextColumn::make('roles.name')
 
 
             ])
@@ -116,4 +123,10 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    protected static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasAnyRole(['super-admin', 'admin' ]);
+    }
+
 }

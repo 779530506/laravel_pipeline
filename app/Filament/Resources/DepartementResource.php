@@ -52,7 +52,7 @@ class DepartementResource extends Resource
                         ->maxLength(150)
                         ->translateLabel(),
                     Select::make('hopital_id')
-                        ->relationship('hopital', 'name'),
+                        ->relationship('hopital', 'name')
 
                  ])
                 ]);
