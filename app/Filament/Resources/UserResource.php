@@ -21,7 +21,10 @@ use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\RelationManagers\PipelinesRelationManager;
+use App\Services\PipelineService;
 use Filament\Forms\Components\CheckboxList;
+use Closure;
+use Filament\Notifications\Notification;
 
 class UserResource extends Resource
 {
@@ -46,6 +49,31 @@ class UserResource extends Resource
                 ->schema([
                     TextInput::make('name')
                         ->label('Username')
+                        ->rules([
+                            function (Closure $get) {
+                                return function (string $attribute, $value, Closure  $fail) use ($get) {
+                                    $password =  $get('password');
+                                    $email =  $get('email');
+                                    $response=PipelineService::createUser($value,$password,$email);
+                                    if ($response["code"] != 201) {
+                                            $fail("Erreur de création User, verifier le serveur  ");
+                                            Notification::make()
+                                                ->title('Erreur!')
+                                                ->danger()
+                                                ->body('Impossible de créer ce user, vérifier le serveur et les données saisies')
+                                                ->persistent()
+                                                ->send();
+                                    }else{
+                                        Notification::make()
+                                        ->title('Success!')
+                                        ->success()
+                                        ->body($response["message"])
+                                        ->persistent()
+                                        ->send();
+                                    }
+                                };
+                            },
+                        ])
                         ->maxLength(150)
                         ->translateLabel(),
                     TextInput::make('password')

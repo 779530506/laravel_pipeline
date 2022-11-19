@@ -94,5 +94,30 @@ class PipelineService
         }
     }
 
+    public static function createUser($username,$password,$email)
+    {
+
+        $url = "/api/users/";
+        try {
+            $response = Http::withHeaders([
+                "Accept" => "application/json",
+                "Content-type" => "application/json"
+            ])->post(config("app.FLASK_URL") . $url, [
+
+                        "username"  =>  $username,
+                        "password"  =>  $password,
+                        "email"  =>  $email,
+            ]);
+
+
+            return $response["response"];
+        } catch (Exception $e) {
+            $result['code'] = 500;
+            $result['message'] = "Erreur de création d'un pipeline Serveur innaccessible";
+            return $result;
+        }
+    }
+
+
 
 }
