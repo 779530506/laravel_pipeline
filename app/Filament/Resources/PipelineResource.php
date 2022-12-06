@@ -69,7 +69,6 @@ class PipelineResource extends Resource
                                     }
 
                                     $response = PipelineService::createPipeline($hopital_id,$departement_id,$value);
-                                    //dd($response);
                                     if ($response["code"] != 201) {
                                             $fail("Erreur de création pipelines, verifier le serveur  ");
                                             Notification::make()

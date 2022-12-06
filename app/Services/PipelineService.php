@@ -16,15 +16,17 @@ class PipelineService
         $departement =Departement::where('id',$departement_id)->pluck('name')->first();
         $hopital =Hopital::where('id',$hopital_id)->pluck('name')->first();
         $url = "/api/nifi/";
+        $username = str_replace(' ', '', auth()->user()->name);
         try {
             $response = Http::withHeaders([
                 "Accept" => "application/json",
                 "Content-type" => "application/json"
-            ])->post(config("app.FLASK_URL") . $url, [
+            ])->timeout(9000000)->post(config("app.FLASK_URL") . $url, [
 
                         "name_hospital"  =>  $hopital,
                         "name_dep"  =>  $departement,
-                        "name_pipeline"  =>  $name_pipeline
+                        "name_pipeline"  =>  $name_pipeline,
+                        "username"  =>  $username
             ]);
 
 
@@ -32,6 +34,7 @@ class PipelineService
         } catch (Exception $e) {
             $result['code'] = 500;
             $result['message'] = "Erreur de création d'un pipeline Serveur innaccessible";
+            $result['error'] =$e;
             return $result;
         }
     }
