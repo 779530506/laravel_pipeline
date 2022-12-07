@@ -121,6 +121,29 @@ class PipelineService
         }
     }
 
+    public static function deleteUser($username)
+    {
+
+        $url = "/api/users/";
+        try {
+            $response = Http::withHeaders([
+                "Accept" => "application/json",
+                "Content-type" => "application/json"
+            ])->delete(config("app.FLASK_URL") . $url, [
+
+                        "username"  =>  $username,
+
+            ]);
+
+
+            return $response;
+        } catch (Exception $e) {
+            $result['code'] = 500;
+            $result['message'] = "Erreur de suppression d'un pipeline Serveur innaccessible";
+            return $result;
+        }
+    }
+
 
 
 }
