@@ -154,7 +154,7 @@ class UserResource extends Resource
 
     protected static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->hasAnyRole(['super-admin', 'admin' ]);
+        return auth()->user()->hasAnyRole(['Super Admin', 'admin' ]);
     }
 
 }

@@ -21,7 +21,7 @@ class PipelineService
             $response = Http::withHeaders([
                 "Accept" => "application/json",
                 "Content-type" => "application/json"
-            ])->timeout(900000)->post(config("app.FLASK_URL") . $url, [
+            ])->timeout(9000000)->post(config("app.FLASK_URL") . $url, [
 
                         "name_hospital"  =>  $hopital,
                         "name_dep"  =>  $departement,

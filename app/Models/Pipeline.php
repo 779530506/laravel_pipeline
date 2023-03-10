@@ -17,6 +17,11 @@ class Pipeline extends Model
         'hopital_id'
     ];
 
+    public function predictions()
+    {
+        return $this->hasMany(Prediction::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
