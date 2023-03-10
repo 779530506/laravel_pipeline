@@ -17,7 +17,7 @@ class UserPolicie
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -29,7 +29,7 @@ class UserPolicie
      */
     public function view(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
 
         //
     }
@@ -42,7 +42,7 @@ class UserPolicie
      */
     public function create(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
 
     }
 
@@ -55,7 +55,7 @@ class UserPolicie
      */
     public function update(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
 
     }
 
@@ -68,7 +68,7 @@ class UserPolicie
      */
     public function delete(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
 
     }
 
@@ -81,7 +81,7 @@ class UserPolicie
      */
     public function restore(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
 
     }
 
@@ -94,7 +94,7 @@ class UserPolicie
      */
     public function forceDelete(User $user)
     {
-        return $user->hasAnyRole(['super-admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
 
     }
 }

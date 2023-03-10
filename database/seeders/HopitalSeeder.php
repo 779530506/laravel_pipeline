@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hopital;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,5 +16,8 @@ class HopitalSeeder extends Seeder
     public function run()
     {
         //
+        Hopital::create([
+            "name" => "principal",
+        ]);
     }
 }

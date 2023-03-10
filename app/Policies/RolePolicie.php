@@ -18,8 +18,8 @@ class RolePolicie
      */
     public function viewAny(User $user)
     {
-         #return $user->hasAnyRole(['super-admin','admin']);
-         return [$user->can('view_role'),$user->hasAnyRole(['super-admin','admin'])];
+         #return $user->hasAnyRole(['Super Admin','admin']);
+         return [$user->can('view_role'),$user->hasAnyRole(['Super Admin','admin'])];
     }
 
     /**
@@ -31,9 +31,9 @@ class RolePolicie
      */
     public function view(User $user, Role $role)
     {
-         #return $user->hasAnyRole(['super-admin','admin']);
+         #return $user->hasAnyRole(['Super Admin','admin']);
          #return $user->can('view_role');
-         return [$user->can('view_role'),$user->hasAnyRole(['super-admin','admin'])];
+         return [$user->can('view_role'),$user->hasAnyRole(['Super Admin','admin'])];
     }
 
     /**
@@ -44,9 +44,9 @@ class RolePolicie
      */
     public function create(User $user)
     {
-         #return $user->hasAnyRole(['super-admin','admin']);
+         #return $user->hasAnyRole(['Super Admin','admin']);
          #return $user->can('create_role');
-         return [$user->can('create_role'),$user->hasAnyRole(['super-admin','admin'])];
+         return [$user->can('create_role'),$user->hasAnyRole(['Super Admin','admin'])];
     }
 
     /**
@@ -58,9 +58,9 @@ class RolePolicie
      */
     public function update(User $user, Role $role)
     {
-         #return $user->hasAnyRole(['super-admin','admin']);
+         #return $user->hasAnyRole(['Super Admin','admin']);
         # return $user->can('update_role');
-         return [$user->can('update_role'),$user->hasAnyRole(['super-admin','admin'])];
+         return [$user->can('update_role'),$user->hasAnyRole(['Super Admin','admin'])];
     }
 
     /**
@@ -72,7 +72,7 @@ class RolePolicie
      */
     public function delete(User $user, Role $role)
     {
-         #return $user->hasAnyRole(['super-admin','admin']);
+         #return $user->hasAnyRole(['Super Admin','admin']);
          return $user->can('delete_role');
     }
 
@@ -85,7 +85,7 @@ class RolePolicie
      */
     public function restore(User $user, Role $role)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -97,6 +97,6 @@ class RolePolicie
      */
     public function forceDelete(User $user, Role $role)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 }

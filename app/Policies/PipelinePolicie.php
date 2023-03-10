@@ -18,7 +18,7 @@ class PipelinePolicie
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyRole(['medecin','super-admin','admin']);
+        return $user->hasAnyRole(['medecin','Super Admin','admin']);
 
     }
 
@@ -31,7 +31,7 @@ class PipelinePolicie
      */
     public function view(User $user, Pipeline $pipeline)
     {
-        return $user->hasAnyRole(['medecin','super-admin','admin']);
+        return $user->hasAnyRole(['medecin','Super Admin','admin']);
     }
 
     /**
@@ -42,7 +42,7 @@ class PipelinePolicie
      */
     public function create(User $user)
     {
-        return $user->hasAnyRole(['medecin','super-admin']);
+        return $user->hasAnyRole(['medecin','Super Admin']);
     }
 
     /**
@@ -54,7 +54,7 @@ class PipelinePolicie
      */
     public function update(User $user, Pipeline $pipeline)
     {
-        return $user->hasAnyRole(['medecin','super-admin']);
+        return $user->hasAnyRole(['medecin','Super Admin']);
     }
 
     /**
@@ -66,7 +66,7 @@ class PipelinePolicie
      */
     public function delete(User $user, Pipeline $pipeline)
     {
-        return $user->hasAnyRole(['medecin','super-admin']);
+        return $user->hasAnyRole(['medecin','Super Admin']);
     }
 
     /**
@@ -78,7 +78,7 @@ class PipelinePolicie
      */
     public function restore(User $user, Pipeline $pipeline)
     {
-        return $user->hasAnyRole(['medecin','super-admin']);
+        return $user->hasAnyRole(['medecin','Super Admin']);
     }
 
     /**
@@ -90,6 +90,6 @@ class PipelinePolicie
      */
     public function forceDelete(User $user, Pipeline $pipeline)
     {
-        return $user->hasAnyRole(['medecin','super-admin']);
+        return $user->hasAnyRole(['medecin','Super Admin']);
     }
 }

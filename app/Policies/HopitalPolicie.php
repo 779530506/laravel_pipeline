@@ -18,7 +18,7 @@ class HopitalPolicie
      */
     public function viewAny(User $user)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -30,7 +30,7 @@ class HopitalPolicie
      */
     public function view(User $user, Hopital $hopital)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -41,7 +41,7 @@ class HopitalPolicie
      */
     public function create(User $user)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -53,7 +53,7 @@ class HopitalPolicie
      */
     public function update(User $user, Hopital $hopital)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -65,7 +65,7 @@ class HopitalPolicie
      */
     public function delete(User $user, Hopital $hopital)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -77,7 +77,7 @@ class HopitalPolicie
      */
     public function restore(User $user, Hopital $hopital)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -89,6 +89,6 @@ class HopitalPolicie
      */
     public function forceDelete(User $user, Hopital $hopital)
     {
-         return $user->hasAnyRole(['super-admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 }

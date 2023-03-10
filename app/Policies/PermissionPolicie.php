@@ -18,7 +18,7 @@ class PermissionPolicie
      */
     public function viewAny(User $user)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -30,7 +30,7 @@ class PermissionPolicie
      */
     public function view(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -41,7 +41,7 @@ class PermissionPolicie
      */
     public function create(User $user)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -53,7 +53,7 @@ class PermissionPolicie
      */
     public function update(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -65,7 +65,7 @@ class PermissionPolicie
      */
     public function delete(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -77,7 +77,7 @@ class PermissionPolicie
      */
     public function restore(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -89,6 +89,6 @@ class PermissionPolicie
      */
     public function forceDelete(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['super-admin','admin']);
+         //return $user->hasAnyRole(['Super Admin','admin']);
     }
 }
