@@ -5,5 +5,3 @@
         {{ __('filament::login.buttons.submit.label') }}
     </x-filament::button>
 </form>
-
-
