@@ -17,3 +17,7 @@ Route::get('/', function () {
    // auth()->user()->assignRole('user');
     return view('welcome');
 });
+Route::get('/grafana', function () {
+    // auth()->user()->assignRole('user');
+     return view('grafana');
+ });
