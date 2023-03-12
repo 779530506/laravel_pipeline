@@ -11,7 +11,7 @@ class Prediction extends Model
 
     protected $fillable = [
         'name',
-        'thickness','size','shape','madh','epsize','bnuc','bchrom','nNuc','mit'
+        'thickness','size','shape','madh','epsize','bnuc','bchrom','nNuc','mit','pipeline_id'
     ];
 
     public function pipeline()

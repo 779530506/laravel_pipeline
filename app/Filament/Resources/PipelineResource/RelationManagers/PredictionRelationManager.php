@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources\PipelineResource\RelationManagers;
+use Closure;
 
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -9,6 +10,10 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Services\PredictionService;
+use Filament\Forms\Components\Card;
+
+
 
 class PredictionRelationManager extends RelationManager
 {
@@ -40,7 +45,20 @@ class PredictionRelationManager extends RelationManager
                 Forms\Components\TextInput::make('bchrom')
                         ->integer(),
                 Forms\Components\TextInput::make('mit')
-                        ->integer(),
+                        ->integer()
+                        // ->rules([
+                        //     PredictionService::createPrediction()
+                        //     ])
+                        ->rules([
+                            function () {
+                                return function (string $attribute, $value, Closure $fail) {
+                                    PredictionService::createPrediction();
+                                    if ($value === 'foo') {
+                                        $fail("The {$attribute} is invalid.");
+                                    }
+                                };
+                            },
+                        ])
             ]);
     }
 
