@@ -7,11 +7,13 @@ namespace App\Providers;
 use App\Models\Departement;
 use App\Models\Hopital;
 use App\Models\Pipeline;
+use App\Models\Prediction;
 use App\Models\User;
 use App\Policies\DepartementPolicie;
 use App\Policies\HopitalPolicie;
 use App\Policies\PermissionPolicie;
 use App\Policies\PipelinePolicie;
+use App\Policies\PredictionPolicie;
 use App\Policies\RolePolicie;
 use App\Policies\UserPolicie;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         User::class => UserPolicie::class,
         Pipeline::class => PipelinePolicie::class,
+        Prediction::class => PredictionPolicie::class,
         Hopital::class => HopitalPolicie::class,
         Departement::class => DepartementPolicie::class,
         Role::class => RolePolicie::class,

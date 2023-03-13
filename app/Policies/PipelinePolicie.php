@@ -11,85 +11,134 @@ class PipelinePolicie
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the pipeline can view any models.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
-    {
-        return $user->hasAnyRole(['medecin','Super Admin','admin']);
-
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\Pipeline  $pipeline
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Pipeline $pipeline)
+    public function viewAny( User $user)
     {
-        return $user->hasAnyRole(['medecin','Super Admin','admin']);
+        return $user->can('view_any_pipeline');
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the pipeline can view the model.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
-    {
-        return $user->hasAnyRole(['medecin','Super Admin']);
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\Pipeline  $pipeline
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Pipeline $pipeline)
+    public function view( User $user)
     {
-        return $user->hasAnyRole(['medecin','Super Admin']);
+        return $user->can('view_pipeline');
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the pipeline can create models.
      *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\Pipeline  $pipeline
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Pipeline $pipeline)
+    public function create( User $user)
     {
-        return $user->hasAnyRole(['medecin','Super Admin']);
+        return $user->can('create_pipeline');
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Determine whether the pipeline can update the model.
      *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\Pipeline  $pipeline
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Pipeline $pipeline)
+    public function update( User $user)
     {
-        return $user->hasAnyRole(['medecin','Super Admin']);
+        return $user->can('update_pipeline');
     }
 
     /**
-     * Determine whether the user can permanently delete the model.
+     * Determine whether the pipeline can delete the model.
      *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\Pipeline  $pipeline
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Pipeline $pipeline)
+    public function delete( User $user)
     {
-        return $user->hasAnyRole(['medecin','Super Admin']);
+        return $user->can('delete_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can bulk delete.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function deleteAny( User $user)
+    {
+        return $user->can('delete_any_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can permanently delete.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function forceDelete( User $user)
+    {
+        return $user->can('force_delete_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can permanently bulk delete.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function forceDeleteAny( User $user)
+    {
+        return $user->can('force_delete_any_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can restore.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restore( User $user)
+    {
+        return $user->can('restore_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can bulk restore.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restoreAny( User $user)
+    {
+        return $user->can('restore_any_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can bulk restore.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function replicate( User $user)
+    {
+        return $user->can('replicate_pipeline');
+    }
+
+    /**
+     * Determine whether the pipeline can reorder.
+     *
+     * @param  \App\Models\Pipeline  $pipeline
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reorder( User $user)
+    {
+        return $user->can('reorder_pipeline');
     }
 }

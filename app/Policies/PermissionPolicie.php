@@ -30,7 +30,7 @@ class PermissionPolicie
      */
     public function view(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['Super Admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -41,7 +41,7 @@ class PermissionPolicie
      */
     public function create(User $user)
     {
-         //return $user->hasAnyRole(['Super Admin','admin']);
+        return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
@@ -53,7 +53,7 @@ class PermissionPolicie
      */
     public function update(User $user, Permission $permission)
     {
-         //return $user->hasAnyRole(['Super Admin','admin']);
+         return $user->hasAnyRole(['Super Admin','admin']);
     }
 
     /**
