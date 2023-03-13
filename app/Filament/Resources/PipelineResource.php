@@ -69,38 +69,39 @@ class PipelineResource extends Resource
                                         }
                                     }
 
-                                    // my modif
-                                    Notification::make()
-                                        ->title('Success!')
-                                        ->success()
-                                        ->body("success")
-                                        ->persistent()
-                                        ->send();
-                                        // end
-
-                                    // $response = PipelineService::createPipeline($hopital_id,$departement_id,$value);
-                                    // if ($response["code"] != 201) {
-                                    //         $fail("Erreur de création pipelines, verifier le serveur  ");
-                                    //         Notification::make()
-                                    //             ->title('Erreur!')
-                                    //             ->danger()
-                                    //             ->body('Impossible de créer ce pipeline, vérifier le serveur et les données saisies')
-                                    //             ->persistent()
-                                    //             ->send();
-                                    // }else{
-                                    //     Notification::make()
+                                    // // my modif
+                                    // Notification::make()
                                     //     ->title('Success!')
                                     //     ->success()
-                                    //     ->body($response["message"])
+                                    //     ->body("success")
                                     //     ->persistent()
                                     //     ->send();
-                                    // }
+                                    //     // end
+
+
+                                    $response = PipelineService::createPipeline($hopital_id,$departement_id,$value);
+                                    if ($response["code"] != 201) {
+                                            $fail("Erreur de création pipelines, verifier le serveur  ");
+                                            Notification::make()
+                                                ->title('Erreur!')
+                                                ->danger()
+                                                ->body('Impossible de créer ce pipeline, vérifier le serveur et les données saisies')
+                                                ->persistent()
+                                                ->send();
+                                    }else{
+                                        Notification::make()
+                                        ->title('Success!')
+                                        ->success()
+                                        ->body($response["message"])
+                                        ->persistent()
+                                        ->send();
+                                    }
                                 };
                             },
                         ])
                         ->translateLabel(),
-                    Select::make('user_id')
-                        ->relationship('user', 'name'),
+                    // Select::make('user_id')
+                    //     ->relationship('user', 'name'),
                     Select::make('hopital_id')
                         ->required()
                         ->label('Hopital')
@@ -117,7 +118,7 @@ class PipelineResource extends Resource
                             }
                             return $hopital->departements->pluck('name','id');
                         }),
-                    Toggle::make('is_running'),
+                    // Toggle::make('is_running'),
 
                  ])
                 ]);

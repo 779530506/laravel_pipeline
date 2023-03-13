@@ -21,14 +21,13 @@ class PipelineService
             $response = Http::withHeaders([
                 "Accept" => "application/json",
                 "Content-type" => "application/json"
-            ])->timeout(9000000)->post(config("app.FLASK_URL") . $url, [
+            ])->post(config("app.FLASK_URL") . $url, [
 
                         "name_hospital"  =>  $hopital,
                         "name_dep"  =>  $departement,
                         "name_pipeline"  =>  $name_pipeline,
                         "username"  =>  $username
             ]);
-
 
             return $response["response"];
         } catch (Exception $e) {
