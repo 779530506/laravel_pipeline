@@ -54,4 +54,6 @@ class EditUser extends EditRecord
         // $currentUrl = url('/admin/users/' );
         // return Redirect()->to($currentUrl);
     }
+
+
 }

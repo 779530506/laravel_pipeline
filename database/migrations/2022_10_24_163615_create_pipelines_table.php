@@ -16,7 +16,10 @@ return new class extends Migration
         Schema::create('pipelines', function (Blueprint $table) {
             $table->id();
             $table->text('name_pipeline');
-            $table->boolean('is_running');
+            $table->text('debut_souhaite')->nullable();
+            $table->text('taille_moyenne_message')->nullable();
+            $table->text('retention_kafka')->nullable();
+            $table->boolean('is_running')->nullable();
             $table->foreignId("departement_id");
             $table->foreignId("hopital_id");
             $table->foreignId('user_id')->nullable();

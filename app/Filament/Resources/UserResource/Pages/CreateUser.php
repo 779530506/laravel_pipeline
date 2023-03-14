@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
+use App\Services\PipelineService;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Hash;
 
 class CreateUser extends CreateRecord
 {
@@ -14,5 +16,18 @@ class CreateUser extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+        {
+            // $data['user_id'] = auth()->id();
+
+            PipelineService::createUser($data['name'],$data['password'],$data['email']);
+
+            $data['password'] =  Hash::make($data['password']);
+
+
+            return $data;
+        }
+
 
 }

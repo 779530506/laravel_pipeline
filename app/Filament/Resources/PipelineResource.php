@@ -119,6 +119,10 @@ class PipelineResource extends Resource
                             return $hopital->departements->pluck('name','id');
                         }),
                     // Toggle::make('is_running'),
+                    TextInput::make('debut_souhaite'),
+                    TextInput::make('taille_moyenne_message'),
+                    TextInput::make('retention_kafka')
+
 
                  ])
                 ]);

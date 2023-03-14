@@ -23,7 +23,7 @@
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="p-6">
-                <iframe height="250" width="1250" title="Lag Message" src="http://51.77.156.14:3000/d-solo/000000127bb/telegraf-system-dashboardgg?orgId=1&from=1663013363337&to=1678655363337&panelId=62082&topic=topic1" width="450" height="200" frameborder="0"></iframe>
+                <iframe height="250" width="1250" title="Lag Message" src="http://51.77.156.14:3000/d-solo/000000127bb/telegraf-system-dashboardgg?orgId=1&from=1663013363337&to=1678655363337&panelId=62082" width="450" height="200" frameborder="0"></iframe>
                 <iframe  iframe height="250" width="1250" title="Lag Time" src="http://51.77.156.14:3000/d-solo/000000127bb/telegraf-system-dashboardgg?orgId=1&from=1678652340365&to=1678655940365&panelId=62080" width="450" height="200" frameborder="0"></iframe>
 
                 <iframe   iframe height="250" width="1250" src="http://51.77.156.14:3000/d-solo/000000127bb/telegraf-system-dashboardgg?orgId=1&from=1676064154309&to=1678656154310&panelId=62073" width="450" height="200" frameborder="0"></iframe>
