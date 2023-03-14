@@ -63,16 +63,16 @@ class PredictionResource extends Resource
                         // ->rules([
                         //     PredictionService::createPrediction()
                         //     ])
-                        ->rules([
-                            function () {
-                                return function (string $attribute, $value, Closure $fail) {
-                                    PredictionService::createPrediction();
-                                    if ($value === 'foo') {
-                                        $fail("The {$attribute} is invalid.");
-                                    }
-                                };
-                            },
-                        ]),
+                        // ->rules([
+                        //     function () {
+                        //         return function (string $attribute, $value, Closure $fail) {
+                        //             PredictionService::createPrediction();
+                        //             if ($value === 'foo') {
+                        //                 $fail("The {$attribute} is invalid.");
+                        //             }
+                        //         };
+                        //     },
+                        // ]),
 
             ]);
     }
