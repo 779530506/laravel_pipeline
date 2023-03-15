@@ -17,6 +17,7 @@ class PipelineService
         $hopital =Hopital::where('id',$hopital_id)->pluck('name')->first();
         $url = "/api/nifi/";
         $username = str_replace(' ', '', auth()->user()->name);
+        dd($departement,$hopital,$username);
         try {
             $response = Http::withHeaders([
                 "Accept" => "application/json",
