@@ -57,48 +57,48 @@ class PipelineResource extends Resource
                     TextInput::make('name_pipeline')
                         ->required()
                         ->label('Nom de pipeline')
-                        ->rules([
-                            function (Closure $get) {
-                                return function (string $attribute, $value, Closure  $fail) use ($get) {
-                                    $departement_id = (int) $get('departement_id');
-                                    $hopital_id = (int) $get('hopital_id');
-                                    $pipelines = Pipeline::where('departement_id',$departement_id)->pluck('name_pipeline');
-                                    foreach($pipelines as $pipeline){
-                                        if ($pipeline == $value) {
-                                            $fail("Ce pipelines existe dans ce département ");
-                                        }
-                                    }
+                        // ->rules([
+                        //     function (Closure $get) {
+                        //         return function (string $attribute, $value, Closure  $fail) use ($get) {
+                        //             $departement_id = (int) $get('departement_id');
+                        //             $hopital_id = (int) $get('hopital_id');
+                        //             $pipelines = Pipeline::where('departement_id',$departement_id)->pluck('name_pipeline');
+                        //             foreach($pipelines as $pipeline){
+                        //                 if ($pipeline == $value) {
+                        //                     $fail("Ce pipelines existe dans ce département ");
+                        //                 }
+                        //             }
 
-                                    // // my modif
-                                    // Notification::make()
-                                    //     ->title('Success!')
-                                    //     ->success()
-                                    //     ->body("success")
-                                    //     ->persistent()
-                                    //     ->send();
-                                    //     // end
+                        //             // // my modif
+                        //             // Notification::make()
+                        //             //     ->title('Success!')
+                        //             //     ->success()
+                        //             //     ->body("success")
+                        //             //     ->persistent()
+                        //             //     ->send();
+                        //             //     // end
 
 
-                                    $response = PipelineService::createPipeline($hopital_id,$departement_id,$value);
-                                    if ($response["code"] != 201) {
-                                            $fail("Erreur de création pipelines, verifier le serveur  ");
-                                            Notification::make()
-                                                ->title('Erreur!')
-                                                ->danger()
-                                                ->body('Impossible de créer ce pipeline, vérifier le serveur et les données saisies')
-                                                ->persistent()
-                                                ->send();
-                                    }else{
-                                        Notification::make()
-                                        ->title('Success!')
-                                        ->success()
-                                        ->body($response["message"])
-                                        ->persistent()
-                                        ->send();
-                                    }
-                                };
-                            },
-                        ])
+                        //             $response = PipelineService::createPipeline($hopital_id,$departement_id,$value);
+                        //             if ($response["code"] != 201) {
+                        //                     $fail("Erreur de création pipelines, verifier le serveur  ");
+                        //                     Notification::make()
+                        //                         ->title('Erreur!')
+                        //                         ->danger()
+                        //                         ->body('Impossible de créer ce pipeline, vérifier le serveur et les données saisies')
+                        //                         ->persistent()
+                        //                         ->send();
+                        //             }else{
+                        //                 Notification::make()
+                        //                 ->title('Success!')
+                        //                 ->success()
+                        //                 ->body($response["message"])
+                        //                 ->persistent()
+                        //                 ->send();
+                        //             }
+                        //         };
+                        //     },
+                        // ])
                         ->translateLabel(),
                     // Select::make('user_id')
                     //     ->relationship('user', 'name'),

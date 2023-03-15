@@ -16,6 +16,8 @@ class CreatePipeline extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = auth()->id();
+
+        PipelineService::createPipeline($data['hopital_id'],$data['departement_id'],$data['name_pipeline']);
         return $data;
     }
 
