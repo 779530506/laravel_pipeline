@@ -24,9 +24,13 @@ class ViewPipeline extends ViewRecord
 
              Action::make('Stop')
              ->action('stop')
-             ->color('danger')
+             ->color('danger'),
             // ->icon('heroicon-s-download'),
          // Actions\EditAction::make(),
+
+         Action::make('monitoring pipeline')
+         ->label('Monitoring pipeline')
+         ->url('/grafana'),
         ];
     }
 

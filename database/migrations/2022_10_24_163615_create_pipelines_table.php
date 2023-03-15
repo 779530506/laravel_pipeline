@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('debut_souhaite')->nullable();
             $table->text('taille_moyenne_message')->nullable();
             $table->text('retention_kafka')->nullable();
-            $table->boolean('is_running')->nullable();
+            $table->boolean('is_running')->default(false);
             $table->foreignId("departement_id");
             $table->foreignId("hopital_id");
             $table->foreignId('user_id')->nullable();

@@ -14,7 +14,8 @@ class Pipeline extends Model
         'name_pipeline',
         'is_running',
         'departement_id',
-        'hopital_id'
+        'hopital_id',
+        'user_id'
     ];
 
     public function predictions()
